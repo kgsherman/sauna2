@@ -1,0 +1,9 @@
+{
+  "ignore": [
+  	"components/*",
+  	"public/*"
+  ],
+  "execMap": {
+    "js": "node --harmony"
+  }
+}

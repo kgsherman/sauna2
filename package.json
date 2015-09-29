@@ -1,0 +1,44 @@
+{
+  "name": "sauna2",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "watch": "watchify index.js -o public/js/bundle.js -v",
+    "browserify": "browserify index.js | uglifyjs > public/js/bundle.js",
+    "build": "npm run browserify",
+    "start": "npm run watch && nodemon server/server.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "async": "^1.4.2",
+    "body-parser": "^1.14.1",
+    "cookie-parser": "^1.4.0",
+    "express": "^4.13.3",
+    "express-handlebars": "^2.0.1",
+    "express-session": "^1.11.3",
+    "passport": "^0.3.0",
+    "passport-steam": "^0.1.6",
+    "react": "^0.13.3",
+    "request": "^2.64.0",
+    "superagent": "^1.4.0"
+  },
+  "devDependencies": {
+    "babelify": "^6.3.0",
+    "browserify": "^11.2.0",
+    "nodemon": "^1.7.1",
+    "uglify-js": "^2.4.24",
+    "watchify": "^3.4.0"
+  },
+  "browserify": {
+    "transform": [
+      [
+        "babelify",
+        {
+          "stage": 0
+        }
+      ]
+    ]
+  }
+}
