@@ -18,6 +18,8 @@
     "express": "^4.13.3",
     "express-handlebars": "^2.0.1",
     "express-session": "^1.11.3",
+    "font-awesome": "^4.4.0",
+    "lodash": "^3.10.1",
     "passport": "^0.3.0",
     "passport-steam": "^0.1.6",
     "react": "^0.13.3",

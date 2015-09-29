@@ -11,6 +11,7 @@ body {
 	color: white;
 	width: 100%;
 	height: 100%;
+	background-color: #1b2838;
 }
 
 a {
@@ -62,27 +63,27 @@ a {
 	color: white;
 }
 
-#header-user img {
+.friend img {
 	border: 2px solid;
-	margin-right: 0.5em;
+	margin-right: 1em;
 }
 
-#header-user.offline {
+.friend.offline {
 	color: #b8b6b4;
 }
-#header-user.offline img {
+.friend.offline img {
 	border-color: #b8b6b4;
 }
-#header-user.online {
+.friend.online {
 	color: #52a1c1;
 }
-#header-user.online img {
+.friend.online img {
 	border-color: #52a1c1;
 }
-#header-user.ingame {
+.friend.ingame {
 	color: #8eb73b;
 }
-#header-user.ingame img {
+.friend.ingame img {
 	border-color: #8eb73b;
 }
 
@@ -90,4 +91,34 @@ a {
 	display: flex;
 	flex-direction: column;
 	height: 100%;
+	width: 300px;
+	margin: 1em;
+}
+
+.friend {
+	display: flex;
+	padding: 0.5em 1em;
+	background-color: rgba( 0, 0, 0, 0.2 );
+}
+
+.friend.true {
+	background-color: rgba( 85, 125, 171, 0.4 );
+}
+
+#filter {
+	display: flex;
+	align-items: center;
+	justify-content: space-around;
+	margin-bottom: 1em;
+}
+#filter i {
+	flex-grow: 1;
+	text-align: center;
+}
+#filter input {
+	flex-grow: 8;
+	background-color: transparent;
+	color: #c7d5e0;
+	outline: none;
+	border: none;
 }
