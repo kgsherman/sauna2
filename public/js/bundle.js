@@ -363,7 +363,38 @@ var Header = (function (_React$Component) {
 			return _react2['default'].createElement(
 				'div',
 				{ id: 'header' },
-				_react2['default'].createElement(_friend2['default'], { user: this.props.user }),
+				_react2['default'].createElement(
+					'div',
+					{ id: 'user', className: 'friend ' + this.user.status + ' ' + this.props.selected, onClick: this.select },
+					_react2['default'].createElement(
+						'div',
+						{ className: 'friend-avatar' },
+						_react2['default'].createElement('img', { src: this.user.data.avatar })
+					),
+					_react2['default'].createElement(
+						'div',
+						{ className: 'friend-info' },
+						_react2['default'].createElement(
+							'div',
+							{ className: 'friend-name' },
+							this.user.data.personaname
+						),
+						_react2['default'].createElement(
+							'div',
+							{ className: 'friend-status' },
+							this.user.englishStatus
+						)
+					),
+					_react2['default'].createElement(
+						'div',
+						null,
+						_react2['default'].createElement(
+							'a',
+							{ href: '/logout' },
+							'> Log out'
+						)
+					)
+				),
 				_react2['default'].createElement(
 					'div',
 					{ id: 'header-login' },

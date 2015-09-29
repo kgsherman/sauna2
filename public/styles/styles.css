@@ -51,15 +51,16 @@ a {
 	padding: 0.5em;
 }
 
-#header-user {
-	display: flex;
+#user {
+	background-color: transparent;
+	padding: 0;
 }
 
-#header-user a {
+#user a {
 	color: #b8b6b4;
 }
 
-#header-user a:hover {
+#user a:hover {
 	color: white;
 }
 
@@ -106,9 +107,11 @@ a {
 }
 
 #filter {
+	color: #c7d5e0;
 	display: flex;
 	align-items: center;
 	justify-content: space-around;
+	padding: 0.5em;
 	margin-bottom: 1em;
 }
 #filter i {
@@ -116,9 +119,9 @@ a {
 	text-align: center;
 }
 #filter input {
+	color: #c7d5e0;
 	flex-grow: 8;
 	background-color: transparent;
-	color: #c7d5e0;
 	outline: none;
 	border: none;
 }
