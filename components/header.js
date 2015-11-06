@@ -23,7 +23,7 @@ export default class Header extends React.Component {
 						<div className="friend-name">{this.user.data.personaname}</div>
 						<div className="friend-status">{this.user.englishStatus}</div>
 					</div>
-					<div><a href="/logout">> Log out</a></div>
+					<div className='logout'><a href="/logout">> Log out</a></div>
 				</div>
 				<div id="header-login">
 					<img src="/assets/steamlogo.png" />

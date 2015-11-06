@@ -33,17 +33,12 @@ export default class FriendList extends React.Component {
 	updateFilter = () => {
 		this.setState({ filter: event.target.value });
 	}
-	addSelected = (e) => {
-		let selection = this.state.selectedFriends;
-		let loc = selection.indexOf(e);
-		if (loc >= 0) {
-			selection.splice(loc, 1);
-		} else {
-			selection.push(e);
-		}
-		this.setState({
-			selectedFriends: selection
-		});
+	clearFilter = () => {
+		React.findDOMNode(this.refs.filter).value = '';
+		this.setState({ filter: '' });
+	}
+	toggleSelected = (id) => {
+		this.props.toggleSelected(id);
 	}
 	constructor (props) {
 		super(props);
@@ -54,16 +49,17 @@ export default class FriendList extends React.Component {
 			<section id="friends">
 				<div id="filter">
 					<i className="fa fa-search"></i>
-					<input type="text" placeholder="Search" onChange={this.updateFilter} />
-					<i className="fa fa-times"></i>
+					<input type="text" placeholder="Search" onChange={this.updateFilter} ref="filter" />
+					<i className="fa fa-times" onClick={this.clearFilter}></i>
 				</div>
 				{this.state.friends
 					.filter(friend => friend.personaname.toLowerCase().indexOf(this.state.filter.toLowerCase()) >= 0)
 					.map(friend => <Friend 
 						key={friend.steamid} 
-						selected={this.state.selectedFriends.indexOf(friend.steamid) >= 0}
-						onSelect={this.addSelected}
+						selected={this.props.selected.hasOwnProperty(friend.steamid)}
+						toggleSelected={this.toggleSelected}
 						user={friend}
+						loading={this.props.selected.hasOwnProperty(friend.steamid) && this.props.selected[friend.steamid].loading}
 					/>)
 				}
 			</section>

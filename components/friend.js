@@ -2,9 +2,14 @@ import React from 'react';
 
 import SteamUser from '../lib/steamuser';
 
+import Spinner from './spinner';
+
 export default class Friend extends React.Component {
+	state = {
+		loading: false
+	}
 	select = () => {
-		this.props.onSelect(this.props.user.steamid);
+		this.props.toggleSelected(this.props.user.steamid);
 	}
 	constructor (props) {
 		super(props);
@@ -19,6 +24,10 @@ export default class Friend extends React.Component {
 				<div className="friend-info">
 					<div className="friend-name">{this.user.data.personaname}</div>
 					<div className="friend-status">{this.user.englishStatus}</div>
+					<div className="friend-game">{this.user.data.gameextrainfo}</div>
+				</div>
+				<div className="friend-loading">
+					{this.props.loading && <Spinner />}
 				</div>
 			</div>
 		);			

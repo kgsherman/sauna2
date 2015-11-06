@@ -1,4 +1,4 @@
-"use strict"
+'use strict';
 
 var express = require('express');
 var app = express();
@@ -60,8 +60,73 @@ app.get('/user', (req, res) => {
 });
 
 var request = require('request');
-var async = require('async');
-app.get('/friends', (req, res) => {
+
+function requestIDs(userID) {
+	return new Promise(function(resolve, reject) {
+		var path = 'http://api.steampowered.com/ISteamUser/GetFriendList/v0001/?key=' + APIKEY + '&steamid=' + userID + '&relationship=friend';
+		request(path, function (e, r, body) {
+			if (e) {
+				reject(Error(e));
+			} else {
+				let res = JSON.parse(body).friendslist.friends.map(friend => friend.steamid);
+				resolve(res);
+			}
+		});
+	});
+}
+
+function requestUserData(IDs) {
+	return new Promise(function(resolve, reject) {
+		let path = 'http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=' + APIKEY + '&steamids=' + IDs;
+		request(path, function (e, r, body) {
+			if (e) {
+				reject(Error(e));
+			} else {
+				let res = JSON.parse(body).response.players;
+				resolve(res);
+			}
+		});
+	});
+}
+
+async function getFriendIDs (userID) {
+	let response = await requestIDs(userID);
+	return response;
+}
+
+async function getFriendData (IDs) {
+	let chunkSize = 100; // steam allows no more than 100 IDs to be passed at once.
+	let promises = [];
+	for (let i = 0; i < IDs.length; i += chunkSize) {
+		let chunk = IDs.slice(i, i + chunkSize).join();
+		let tempPromise = new Promise(function (resolve, reject) {
+			requestUserData(chunk).then(function (val) {
+				resolve(val);
+			})
+		})
+		promises.push(tempPromise);
+	}
+	let results = [].concat.apply([], await* promises);
+	return results;
+}
+
+async function getFriends (req, res) {
+	try {
+		let userID = req.user._json.steamid;
+		let IDs = await getFriendIDs(userID);
+		let results = await getFriendData(IDs);
+		return results;
+	} catch (e) {
+		throw e;
+	}
+}
+
+app.get('/friends', async function (req, res) {
+	let result = await getFriends(req, res);
+	res.json(result);
+});
+
+app.get('/friendsold', (req, res) => {
 	if (!req.user) {
 		res.sendStatus(404); 
 		return;
@@ -96,6 +161,13 @@ app.get('/friends', (req, res) => {
 		}
 	], function (err, result) {
 		res.json(result);
+	});
+});
+
+app.get('/games/:id', (req, res) => {
+	let path = 'http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=' + APIKEY + '&steamid=' + req.params.id + '&format=json&include_appinfo=1&include_played_free_games=1';
+	request(path, (e, r, body) => {
+		res.json(JSON.parse(body).response.games);
 	});
 });
 
